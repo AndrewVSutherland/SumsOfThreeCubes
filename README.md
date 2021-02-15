@@ -2,7 +2,7 @@
 
 This repo contains a C implementation of the algorithm described in the paper [On a question of Mordell](https://arxiv.org/abs/2007.01209) by Andrew R. Booker and Andrew V. Sutherland
 
-It depends on [primesieve](https://github.com/kimwalisch/primesieve) and [GMP](https://gmplib.org/).  This libraries need to be installed before you can build the software here.
+It uses the [primesieve](https://github.com/kimwalisch/primesieve) and [GMP](https://gmplib.org/) libraries which need to be installed before you can build the software in this repo.
 
 To build just type `make`.
 
