@@ -1,4 +1,4 @@
-all: zcubes zcubesr zcubesv admissible
+all: zcubes admissible
 
 clean:
 	rm -vf admissible zcubes
