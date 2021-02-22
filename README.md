@@ -1,4 +1,4 @@
-# SumsOfThreeCubes
+# Sums Of Three Cubes
 
 This repo contains a C implementation of the algorithm described in the paper [On a question of Mordell](https://arxiv.org/abs/2007.01209) by Andrew R. Booker and Andrew V. Sutherland
 
