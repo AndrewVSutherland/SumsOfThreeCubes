@@ -64,7 +64,12 @@ static inline uint64_t get_maxrss(void) { struct rusage x; return getrusage(RUSA
 static inline uint64_t atoul (char *s) { return strtoul(s,0,10); }
 
 // this function should be used by anyone wanting a seed for a random number generator; when debugging you can fix _cstd_seed to get deterministic behavior
+#ifdef CSTD_ONCE
 unsigned long _cstd_seed;       // you can set this to any non-zero value (in your main function, not here)
+#else
+extern unsigned long _cstd_seed;
+#endif
+
 static inline unsigned long cstd_seed(void)
 {
     if ( ! _cstd_seed ) {

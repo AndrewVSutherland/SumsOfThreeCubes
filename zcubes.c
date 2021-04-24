@@ -12,6 +12,7 @@
 #include "m64.h"                    // 64-bit Montgomery arithmetic
 #include "b32.h"                    // 32-bit Barrett arithmetic (including functions for fast CRT-ing)
 #include "bitmap.h"                 // simple bitmap test/set/lookup and enumeration
+#define CSTD_ONCE
 #include "cstd.h"                   // define SOFTASSERTS before this inlude if you want them on
 #include "report.h"                 // reporting and output functions
 #include "kdata.h"                  // loads cubic-reciprocity constraints for k, precomputes admissible d|k
