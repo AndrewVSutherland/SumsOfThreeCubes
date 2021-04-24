@@ -16,7 +16,7 @@
 #include <math.h>
 
 /*
-    Copyright (c) 2009-2020 Andrew V. Sutherland
+    Copyright (c) 2009-2021 Andrew V. Sutherland
     See LICENSE file for license details.
 */
 
@@ -62,17 +62,6 @@ static inline uint64_t get_cycles(void) { return 0; }
 static inline uint64_t get_maxrss(void) { struct rusage x; return getrusage(RUSAGE_SELF,&x) == 0 ? x.ru_maxrss : 0; }
 
 static inline uint64_t atoul (char *s) { return strtoul(s,0,10); }
-
-// this function should be used by anyone wanting a seed for a random number generator; when debugging you can fix _cstd_seed to get deterministic behavior
-unsigned long _cstd_seed;       // you can set this to any non-zero value (in your main function, not here)
-static inline unsigned long cstd_seed(void)
-{
-    if ( ! _cstd_seed ) {
-        _cstd_seed = (((unsigned long)gethostid())<<32) + getpid();     // make sure seed is different in different processes/hosts, even if seeded at (approximately) the same time
-        _cstd_seed *= time(0);
-    }
-    return _cstd_seed;
-}
 
 #define LOG2            0.693147180559945309417232121458
 #define GAMMA           0.577215664901532860606512090082
