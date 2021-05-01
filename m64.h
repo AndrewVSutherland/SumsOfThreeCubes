@@ -107,11 +107,6 @@ static inline uint64_t m64_from_ui_smallp (uint64_t n, uint64_t p, uint64_t x)
 static inline uint64_t m64_from_ui (uint64_t n, uint64_t p)
     { return p>>32 ? m64_from_ui_bigp(n,p,fastfloorboundl(39614081257132168794624491520.0L/(int64_t)p)) : m64_from_ui_smallp(n,p,b32_inv(p)); }
 
-// Computes 2^64*n mod p (Montgomery rep of 64-bit n) without any precomputation
-// This takes about 90 cyclces at 3.3Ghz (no longer used)
-static inline uint64_t m64_from_ui_old (uint64_t n, uint64_t p)
-    { return ((uint128_t)n<<64)%p; }
-
 // computes 2^64*x mod p (the Montgomery representation of the integer x)
 static inline uint64_t m64_from_si (int64_t x, uint64_t p)
     { return x < 0 ? m64_neg(m64_from_ui(-x,p),p) : m64_from_ui(x,p); }
@@ -150,49 +145,6 @@ static inline uint64_t m64_exp_ui (uint64_t x, uint64_t e, uint64_t R, uint64_t 
     for (y=x,e>>=1;e;e>>=1) {
         x = m64_sqr(x,p,pinv);
         if ( (e&1) ) y = m64_mul(x,y,p,pinv);
-    }
-    return y;
-}
-
-static inline uint64_t m64_exp_ui_new (uint64_t x, uint64_t e, uint64_t R, uint64_t p, uint64_t pinv)
-{
-    uint64_t a[4],res;
-    int t;
-
-    a[0] = R;
-    a[1] = x;
-    a[2] = m64_sqr(x,p,pinv);
-    a[3] = m64_mul(a[2],x,p,pinv);
-
-    t = __builtin_clzl(e)&~1;
-    e <<= t;
-    for (res=a[e>>62],e<<=2,t+=2;t<64;e<<=2,t+=2) {
-        res = m64_sqr(res,p,pinv);
-        res = m64_sqr(res,p,pinv);
-        if (e>>62) res = m64_mul(res,a[e>>62],p,pinv);
-    }
-    return res;
-}
-
-// given x and e in [0,..2^64-1], computes x^e (using a simple 2-bit fixed window)
-static inline uint64_t m64_exp_ui_old (uint64_t x, uint64_t e, uint64_t R, uint64_t p, uint64_t pinv)
-{
-    int i;
-    uint64_t m,y,z,b[4];
-     
-    switch (e) {
-    case 0: return R;
-    case 1: return x;
-    case 2: return m64_sqr(x,p,pinv);
-    case 3: return m64_mul(x,m64_sqr(x,p,pinv),p,pinv);
-    }
-    i = (63-__builtin_clzl(e)) & 62;
-    m = 3UL << i;
-    b[1] = x; b[2] = m64_sqr(x,p,pinv); b[3] = m64_mul(x,b[2],p,pinv);
-    y = b[(m&e)>>i];
-    for ( m>>=2, i-=2 ; m ; m>>=2, i-=2 ) {
-        y = m64_sqr(m64_sqr(y,p,pinv),p,pinv);
-        if ( (z = (m&e)) ) y = m64_mul(y,b[z>>i],p,pinv);
     }
     return y;
 }

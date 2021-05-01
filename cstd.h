@@ -53,7 +53,7 @@ static inline char *string_time (char buf[256])
     { time_t t = time(NULL);  strftime(buf,256,"%Y-%m-%d-%H-%M-%S",gmtime(&t)); return buf; }
 
 #ifdef __x86_64__
-static inline uint64_t get_cycles(void) { return __rdtsc(); }   // this takes something like 20 cycles
+static inline uint64_t get_cycles(void) { return __rdtsc(); }   // this takes something like 20 cycles(!)
 #else
 static inline uint64_t get_cycles(void) { return 0; }
 #endif
@@ -524,17 +524,5 @@ static inline __int128_t gcd128 (__int128_t a, __int128_t b)
 }
 
 static inline __int128_t lcm128 (__int128_t a, __int128_t b) { return (a/gcd128(a,b))*b; }
-
-static inline unsigned long ui_binomial (int n, int k)
-{
-    unsigned long a, b;
-    int i;
-    
-    assert ( n <= 28 ); // to avoid 64-bit overflow, require n <= 28
-    if ( k > n/2 ) k = n-k;
-    if ( ! k ) return 1;
-    for ( a = n, b=1, i = 1 ; i < k ; i++ ) { a *=(n-i);  b *= (i+1); }
-    return a/b;
-}
 
 #endif
