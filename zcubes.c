@@ -539,7 +539,7 @@ int main (int argc, char *argv[])
     if ( ! cores ) { cores = n; report_printf ("Using %d threads.\n", cores); }
     else { if ( cores > n ) fprintf (stderr, "WARNING: specified number of cores %d exceeds number of cores %d available\n", cores, n); }
 
-    k = atoi(argv[2]);  if ( k < 0 || ! goodk(k) ) { fprintf (stderr, "ERROR: k=%d must be a postive integer <= 1000 congruent to 3 or 6 mod 9.\n",k); return -1; }
+    k = atoi(argv[2]);  if ( k < 0 || ! goodk(k) ) { fprintf (stderr, "ERROR: k=%d must be a cubefree postive integer <= 1000 congruent to 3 or 6 mod 9.\n",k); return -1; }
 
     dmax = strto64(argv[5]);
     if ( dmax > DMAX ) { fprintf (stderr, "ERROR: dmax = %lu cannot exceed DMAX = %lu\n", dmax, DMAX); return -1; }
