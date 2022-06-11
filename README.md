@@ -6,7 +6,7 @@ It uses the [primesieve](https://github.com/kimwalisch/primesieve) and [GMP](htt
 
 To build just type `make`.
 
-To search for for solutions to x^3 + y^3 + z^3 = k for cubefree k = +/- 3 mod 9 with |z| <= zmax, d := |x+y| <= dmax, and largest prime divisor p of d in [pmin,pmax] using n threads running in parallel, type
+To search for for solutions to x^3 + y^3 + z^3 = k for cubefree k = +/- 3 mod 9 at most 1000 with |x| > |y| > |z| and |z| <= zmax and d := |x+y| in the interval [2,dmax] with its largest prime divisor p in [pmin,pmax] using n threads running in parallel, type
 
     ./zcubes n k pmin pmax dmax zmax
     
