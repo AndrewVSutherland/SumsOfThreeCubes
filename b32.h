@@ -1,5 +1,5 @@
-#ifndef _INCLUDE_BM_INCLUDE_
-#define _INCLUDE_BM_INCLUDE_
+#ifndef _B32_INCLUDE_
+#define _B32_INCLUDE_
 
 #include "bitmap.h"
 #include "cstd.h"
